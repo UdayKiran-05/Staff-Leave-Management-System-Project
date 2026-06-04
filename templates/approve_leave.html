@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card shadow p-4">
+            <h3>Approve Leave</h3>
+
+            <p><strong>User:</strong> {{ leave.user }}</p>
+            <p><strong>Requested Days:</strong> {{ leave.days }}</p>
+            <p><strong>Available Balance:</strong> {{ balance }}</p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <label>Enter Days to Approve</label>
+                <input type="number" name="approved_days"
+                       class="form-control mb-3"
+                       min="1"
+                       max="{{ leave.days }}"
+                       required>
+
+                <button class="btn btn-success w-100">
+                    Approve Leave
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

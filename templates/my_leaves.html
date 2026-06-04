@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>My Leaves</h3>
+
+<!-- Leave Summary Cards -->
+<div class="row mb-4 text-center">
+    <div class="col-md-2">
+        <div class="card shadow p-3">
+            <h6>Total</h6>
+            <h4>20</h4>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card shadow p-3">
+            <h6>Used</h6>
+            <h4>{{ used_days }}</h4>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card shadow p-3">
+            <h6>Balance</h6>
+            <h4>{{ balance }}</h4>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card shadow p-3">
+            <h6 class="text-success">Approved</h6>
+            <h4>{{ approved_count }}</h4>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card shadow p-3">
+            <h6 class="text-warning">Pending</h6>
+            <h4>{{ pending_count }}</h4>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card shadow p-3">
+            <h6 class="text-danger">Rejected</h6>
+            <h4>{{ rejected_count }}</h4>
+        </div>
+    </div>
+
+</div>
+
+<table class="table table-bordered text-center">
+    <tr>
+        <th>Type</th>
+        <th>Dates</th>
+        <th>Days</th>
+        <th>Status</th>
+        <th>Requested Days</th>
+        <th>Approved Days</th>
+        <th>Action</th>
+
+    </tr>
+
+    {% for leave in leaves %}
+    <tr>
+        <td>{{ leave.leave_type }}</td>
+        <td>{{ leave.start_date }} - {{ leave.end_date }}</td>
+        <td>{{ leave.days }}</td>
+        <td>
+            {% if leave.status == "Pending" %}
+            <span class="badge bg-warning text-dark">🟡 Pending</span>
+            {% elif leave.status == "Approved" %}
+            <span class="badge bg-success">🟢 Approved</span>
+            {% else %}
+            <span class="badge bg-danger">🔴 Rejected</span>
+            {% endif %}
+        </td>
+        <td>{{ leave.days }}</td>
+        <td>{{ leave.approved_days }}</td>
+        <td>
+            {% if leave.status == "Pending" %}
+            <a href="/edit/{{ leave.id }}/" class="btn btn-warning btn-sm">Edit</a>
+            <a href="/delete/{{ leave.id }}/" class="btn btn-danger btn-sm"
+                onclick="return confirm('Are you sure you want to delete this leave?')">
+                Delete
+            </a>
+            {% else %}
+            <span class="badge bg-secondary">Locked</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

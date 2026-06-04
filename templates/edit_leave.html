@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card shadow p-4">
+            <h3>Edit Leave</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <label>Leave Type</label>
+                <input class="form-control mb-2" name="leave_type" value="{{ leave.leave_type }}">
+
+                <label>Start Date</label>
+                <input class="form-control mb-2" type="date" name="start_date" value="{{ leave.start_date|date:'Y-m-d' }}">
+
+                <label>End Date</label>
+                <input class="form-control mb-2" type="date" name="end_date" value="{{ leave.end_date|date:'Y-m-d' }}">
+
+                <label>Reason</label>
+                <textarea class="form-control mb-2" name="reason">{{ leave.reason }}</textarea>
+
+                <button class="btn btn-primary w-100">Update</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Admin Dashboard</h3>
+<form method="GET" class="mb-3">
+    <input type="text" name="search" placeholder="Search by user" class="form-control w-25 d-inline">
+    <button class="btn btn-primary btn-sm">Search</button>
+</form>
+<div class="mb-3">
+
+    <a href="/admin-dashboard/" class="btn btn-dark btn-sm">All</a>
+
+    <a href="?status=Pending" class="btn btn-warning btn-sm">Pending</a>
+
+    <a href="?status=Approved" class="btn btn-success btn-sm">Approved</a>
+
+    <a href="?status=Rejected" class="btn btn-danger btn-sm">Rejected</a>
+
+</div>
+<table class="table table-striped text-center">
+    <tr>
+        <th>User</th>
+        <th>Type</th>
+        <th>Days</th>
+        <th>Status</th>
+        <th>Approved</th>
+        <th>Reason</th>
+        <th>Action</th>
+
+    </tr>
+
+    {% for leave in leaves %}
+    <tr>
+        <td>{{ leave.user }}</td>
+        <td>{{ leave.leave_type }}</td>
+        <td>{{ leave.days }}</td>
+        <td>{{ leave.status }}</td>
+        <td>{{ leave.approved_days }}</td>
+        <td>{{ leave.reason }}</td>
+        
+        <td class="text-center align-middle">
+            {% if leave.status == "Pending" %}
+            <a href="/approve/{{ leave.id }}/" class="btn btn-success btn-sm">Approve</a>
+            <a href="/reject/{{ leave.id }}/" class="btn btn-danger btn-sm">Reject</a>
+            {% else %}
+            <span class="badge bg-secondary px-3 py-2">Completed</span>
+            {% endif %}
+        </td>
+
+    
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}
