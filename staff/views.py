@@ -102,6 +102,8 @@ def edit_leave(request, id):
         leave.save()
         return redirect('my_leaves')
     return render(request, 'edit_leave.html', {'leave': leave})
+def admin_home(request):
+    return render(request, 'admin_home.html')
 # Admin Dashboard
 def admin_dashboard(request):
     status_filter = request.GET.get('status')
@@ -158,3 +160,52 @@ def delete_leave(request, id):
     if leave.status == "Pending":
         leave.delete()
     return redirect('my_leaves')
+# Manage Users
+def manage_users(request):
+    users = User.objects.filter(is_superuser=False)
+    return render(request, 'manage_users.html', {
+        'users': users
+    })
+
+
+# Edit User
+def edit_user(request, id):
+    user = User.objects.get(id=id)
+
+    if request.method == 'POST':
+        user.username = request.POST['username']
+        user.email = request.POST['email']
+        user.save()
+
+        return redirect('manage_users')
+
+    return render(request, 'edit_user.html', {
+        'user': user
+    })
+
+
+# Delete User
+def delete_user(request, id):
+    user = User.objects.get(id=id)
+
+    if not user.is_superuser:
+        user.delete()
+
+    return redirect('manage_users')
+
+
+# Reset Password
+def reset_password(request, id):
+    user = User.objects.get(id=id)
+
+    if request.method == 'POST':
+        new_password = request.POST['password']
+
+        user.set_password(new_password)
+        user.save()
+
+        return redirect('manage_users')
+
+    return render(request, 'reset_password.html', {
+        'user': user
+    })

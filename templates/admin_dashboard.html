@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Admin Dashboard</h3>
+<h3>Leave Requests</h3>
+
 <form method="GET" class="mb-3">
     <input type="text" name="search" placeholder="Search by user" class="form-control w-25 d-inline">
     <button class="btn btn-primary btn-sm">Search</button>
 </form>
 <div class="mb-3">
 
-    <a href="/admin-dashboard/" class="btn btn-dark btn-sm">All</a>
+    <a href="/leave-requests/" class="btn btn-dark btn-sm">All</a>
 
-    <a href="?status=Pending" class="btn btn-warning btn-sm">Pending</a>
+    <a href="/leave-requests/?status=Pending" class="btn btn-warning btn-sm">Pending</a>
 
-    <a href="?status=Approved" class="btn btn-success btn-sm">Approved</a>
+<a href="/leave-requests/?status=Approved" class="btn btn-success btn-sm">Approved</a>
 
-    <a href="?status=Rejected" class="btn btn-danger btn-sm">Rejected</a>
+<a href="/leave-requests/?status=Rejected" class="btn btn-danger btn-sm">Rejected</a>
 
 </div>
 <table class="table table-striped text-center">

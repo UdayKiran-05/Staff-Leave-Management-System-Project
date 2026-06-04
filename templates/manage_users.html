@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Manage Users</h3>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>Username</th>
+    <th>Date Joined</th>
+    <th>Actions</th>
+</tr>
+
+{% for user in users %}
+<tr>
+    <td>{{ user.username }}</td>
+
+    <td>{{ user.date_joined }}</td>
+
+    <td>
+        <a href="/edit-user/{{ user.id }}/" class="btn btn-warning btn-sm">
+            Edit
+        </a>
+
+        <a href="/delete-user/{{ user.id }}/"
+           class="btn btn-danger btn-sm"
+           onclick="return confirm('Delete User?')">
+            Delete
+        </a>
+
+        <a href="/reset-password/{{ user.id }}/"
+           class="btn btn-primary btn-sm">
+            Reset Password
+        </a>
+    </td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}
